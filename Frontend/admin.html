@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+
+<body>
+
+    <h2>📦 All Orders</h2>
+    <ul id="orders"></ul>
+
+    <script>
+        fetch("http://localhost:5000/orders")
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById("orders");
+
+                data.forEach(order => {
+                    const li = document.createElement("li");
+                    li.innerText =
+                        "Name: " + order.name +
+                        " | Total: ৳" + order.total;
+                    list.appendChild(li);
+                });
+            });
+    </script>
+
+</body>
+
+</html>
