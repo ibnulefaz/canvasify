@@ -10,10 +10,13 @@
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="logo-area">
-            <img src="images/logo.png" alt="Canvasify Logo" class="nav-logo">
+            <img src="images/logo.png" alt="Canvasify Logo" class="logo-img">
+            <span class="logo-text">Canvasify</span>
         </div>
+
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
             <li><a href="#products">Products</a></li>
@@ -21,73 +24,94 @@
         </ul>
     </nav>
 
+    <!-- HERO -->
     <header class="hero">
         <div class="hero-content">
             <h1>Turn Your Memories Into Art 🎨</h1>
             <p>Premium Custom Canvas Prints in Bangladesh</p>
-            <button class="shop-now" onclick="window.location.href='#products'">Shop Now</button>
+            <button onclick="scrollToProducts()">Shop Now</button>
         </div>
     </header>
 
+    <!-- PRODUCTS -->
     <main class="container" id="products">
-        <h2 class="section-title">Our Best Products</h2>
+        <h2 class="section-title">Our Products</h2>
 
         <div class="product-gallery">
 
+            <!-- ISLAMIC -->
             <div class="product-card">
                 <div class="img-frame">
-                    <img src="images/is1.jpeg" id="main-islamic" class="fit-img" alt="Islamic">
+                    <img src="images/is1.jpeg" id="main-islamic" class="fit-img">
                 </div>
+
                 <h3>Islamic Canvas</h3>
-                <p class="price">৳69 (5+ pcs: ৳59)</p>
-                <button class="see-more" onclick="toggleGallery('islamic')">See More Designs ⬇</button>
+                <p class="price">৳69 (5+ pieces: ৳59)</p>
+
+                <button onclick="toggleGallery('islamic')">See More</button>
+
                 <div id="gallery-islamic" class="thumb-grid">
-                    <img src="images/is1.jpeg" class="thumb-fit" onclick="swapImg('islamic', this.src)">
-                    <img src="images/is2.jpeg" class="thumb-fit" onclick="swapImg('islamic', this.src)">
+                    <img src="images/is1.jpeg" onclick="swapImg('islamic', this.src)">
+                    <img src="images/is2.jpeg" onclick="swapImg('islamic', this.src)">
                 </div>
+
                 <div class="qty-box">
                     <button onclick="changeQty('islamic', -1)">-</button>
                     <span id="qty-islamic">1</span>
                     <button onclick="changeQty('islamic', 1)">+</button>
                 </div>
-                <button class="add-btn" onclick="addToCart('Islamic Canvas', 'islamic')">Add to Cart</button>
+
+                <button onclick="addToCart('Islamic Canvas', 'islamic')">
+                    Add to Cart
+                </button>
             </div>
 
+            <!-- MOTIVATIONAL -->
             <div class="product-card">
                 <div class="img-frame">
-                    <img src="images/mot1.jpeg" id="main-motivational" class="fit-img" alt="Motivational">
+                    <img src="images/mot1.jpeg" id="main-motivational" class="fit-img">
                 </div>
+
                 <h3>Motivational Canvas</h3>
-                <p class="price">৳69 (5+ pcs: ৳59)</p>
-                <button class="see-more" onclick="toggleGallery('motivational')">See More Designs ⬇</button>
+                <p class="price">৳69 (5+ pieces: ৳59)</p>
+
+                <button onclick="toggleGallery('motivational')">See More</button>
+
                 <div id="gallery-motivational" class="thumb-grid">
-                    <img src="images/mot1.jpeg" class="thumb-fit" onclick="swapImg('motivational', this.src)">
+                    <img src="images/mot1.jpeg" onclick="swapImg('motivational', this.src)">
                 </div>
+
                 <div class="qty-box">
                     <button onclick="changeQty('motivational', -1)">-</button>
                     <span id="qty-motivational">1</span>
                     <button onclick="changeQty('motivational', 1)">+</button>
                 </div>
-                <button class="add-btn" onclick="addToCart('Motivational Canvas', 'motivational')">Add to Cart</button>
+
+                <button onclick="addToCart('Motivational Canvas', 'motivational')">
+                    Add to Cart
+                </button>
             </div>
 
+            <!-- CUSTOM -->
             <div class="product-card">
                 <div class="img-frame">
-                    <img src="images/custom1.jpeg" id="main-custom" class="fit-img" alt="Custom">
+                    <img src="images/custom1.jpeg" id="main-custom" class="fit-img">
                 </div>
+
                 <h3>Custom Canvas</h3>
-                <p class="price">৳69 (5+ pcs: ৳59)</p>
-                <button class="see-more" onclick="toggleGallery('custom')">See More Designs ⬇</button>
+                <p class="price">৳69 (5+ pieces: ৳59)</p>
+
+                <button onclick="toggleGallery('custom')">See More</button>
 
                 <div id="gallery-custom" class="thumb-grid">
-                    <img src="images/custom2.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus3.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus4.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus5.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus6.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus7.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus8.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
-                    <img src="images/cus9.jpeg" class="thumb-fit" onclick="swapImg('custom', this.src)">
+                    <img src="images/custom2.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus3.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus4.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus5.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus6.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus7.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus8.jpeg" onclick="swapImg('custom', this.src)">
+                    <img src="images/cus9.jpeg" onclick="swapImg('custom', this.src)">
                 </div>
 
                 <div class="qty-box">
@@ -95,19 +119,29 @@
                     <span id="qty-custom">1</span>
                     <button onclick="changeQty('custom', 1)">+</button>
                 </div>
-                <button class="add-btn" onclick="addToCart('Custom Canvas', 'custom')">Add to Cart</button>
+
+                <button onclick="addToCart('Custom Canvas', 'custom')">
+                    Add to Cart
+                </button>
             </div>
+
         </div>
     </main>
 
+    <!-- CHECKOUT -->
     <section class="checkout" id="checkout">
         <h2>Checkout Details</h2>
+
         <div class="checkout-card">
-            <p class="total-display">Total Amount: <strong>৳<span id="total-val">0</span></strong></p>
-            <input type="text" id="name" placeholder="Full Name" required>
-            <input type="text" id="phone" placeholder="Phone Number" required>
-            <textarea id="address" placeholder="Full Address" required></textarea>
-            <button class="whatsapp-btn" onclick="sendWhatsApp()">Confirm Order via WhatsApp</button>
+            <p>Total: ৳<span id="total">0</span></p>
+
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="text" id="phone" placeholder="Phone Number">
+            <textarea id="address" placeholder="Full Address"></textarea>
+
+            <button onclick="sendWhatsApp()">
+                Order via WhatsApp
+            </button>
         </div>
     </section>
 

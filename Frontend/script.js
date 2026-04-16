@@ -1,85 +1,101 @@
-let grandTotal = 0;
-let itemsInCart = [];
+let total = 0;
+let cart = [];
 
-// Toggles the visibility of the extra designs gallery
+// Smooth scroll
+function scrollToProducts() {
+    document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+}
+
+// Toggle gallery (safer version)
 function toggleGallery(id) {
-    const gallery = document.getElementById('gallery-' + id);
-    if (gallery) {
-        // Switch between grid and none
-        gallery.style.display = (gallery.style.display === "grid") ? "none" : "grid";
+    let g = document.getElementById("gallery-" + id);
+
+    if (!g.style.display || g.style.display === "none") {
+        g.style.display = "grid";
+    } else {
+        g.style.display = "none";
     }
 }
 
-// Swaps the main product image when a thumbnail is clicked
+// Change main image
 function swapImg(id, src) {
-    const mainImg = document.getElementById('main-' + id);
-    if (mainImg) {
-        mainImg.src = src;
-    }
+    document.getElementById("main-" + id).src = src;
 }
 
-// Changes the quantity on the product card
-function changeQty(id, change) {
-    const el = document.getElementById('qty-' + id);
-    if (el) {
-        let val = parseInt(el.innerText);
-        if (val + change >= 1) {
-            el.innerText = val + change;
-        }
-    }
+// Quantity control
+function changeQty(id, val) {
+    let el = document.getElementById("qty-" + id);
+    let q = parseInt(el.innerText);
+
+    q = Math.max(1, q + val);
+    el.innerText = q;
 }
 
-// Adds items to the logic and updates the checkout total
+// Add to cart (FIXED LOGIC)
 function addToCart(name, id) {
-    const qtyElement = document.getElementById('qty-' + id);
-    if (!qtyElement) return;
+    let qtyEl = document.getElementById("qty-" + id);
+    let qty = parseInt(qtyEl.innerText);
+    let price = 69;
 
-    const qty = parseInt(qtyElement.innerText);
-    // Applying your bulk discount logic: ৳59 for 5+ items, otherwise ৳69
-    const price = (qty >= 5) ? 59 : 69;
-    const total = qty * price;
+    let itemTotal = qty * price;
 
-    grandTotal += total;
-    itemsInCart.push(`${qty}x ${name} (৳${price} each)`);
+    // check if already exists
+    let existing = cart.find(item => item.id === id);
 
-    // Update the UI total
-    const displayTotal = document.getElementById('total-val');
-    if (displayTotal) {
-        displayTotal.innerText = grandTotal;
+    if (existing) {
+        existing.qty += qty;
+        existing.total += itemTotal;
+    } else {
+        cart.push({
+            id: id,
+            name: name,
+            qty: qty,
+            price: price,
+            total: itemTotal
+        });
     }
 
-    alert(`${qty} ${name} added to cart!\nTotal: ৳${grandTotal}`);
+    total += itemTotal;
+
+    document.getElementById("total").innerText = total;
+
+    // reset quantity after adding
+    qtyEl.innerText = 1;
+
+    alert(name + " added to cart ✅");
 }
 
-// Formats the data and opens WhatsApp
+// Send WhatsApp Order (SAFE ENCODING FIX)
 function sendWhatsApp() {
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const addr = document.getElementById('address').value.trim();
+    let name = document.getElementById("name").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let address = document.getElementById("address").value.trim();
 
-    // Validation
-    if (!name || !phone || !addr) {
-        alert("Please provide your Name, Phone, and Address.");
+    if (cart.length === 0) {
+        alert("Please add at least one product ❗");
         return;
     }
 
-    if (grandTotal === 0) {
-        alert("Your cart is empty! Please add some canvases first.");
+    if (!name || !phone || !address) {
+        alert("Please fill all details ❗");
         return;
     }
 
-    // Creating the WhatsApp message format
-    const orderList = itemsInCart.join('%0A- '); // New line for each item
-    const text = `*New Order: Canvasify*%0A%0A` +
-        `*Customer Details:*%0A` +
-        `• Name: ${name}%0A` +
-        `• Phone: ${phone}%0A` +
-        `• Address: ${addr}%0A%0A` +
-        `*Order Summary:*%0A- ${orderList}%0A%0A` +
-        `*Grand Total: ৳${grandTotal}*%0A%0A` +
-        `Please confirm my order!`;
+    let productDetails = "";
 
-    // Opens WhatsApp with your specific number
-    const whatsappUrl = `https://wa.me/8801312866114?text=${text}`;
-    window.open(whatsappUrl, '_blank');
+    cart.forEach((item, index) => {
+        productDetails += `${index + 1}. ${item.name} x${item.qty} = ৳${item.total}\n`;
+    });
+
+    let msg =
+        `🛒 New Order\n\n` +
+        `${productDetails}\n` +
+        `Total: ৳${total}\n\n` +
+        `Name: ${name}\n` +
+        `Phone: ${phone}\n` +
+        `Address: ${address}`;
+
+    let url = "https://wa.me/8801312866114?text=" + encodeURIComponent(msg);
+
+    window.open(url, "_blank");
 }
