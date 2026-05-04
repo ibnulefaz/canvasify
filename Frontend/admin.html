@@ -1,32 +1,95 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Admin Panel | Canvasify</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K4T5TC4XE5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-K4T5TC4XE5');
+    </script>
 </head>
 
 <body>
 
-    <h2>📦 All Orders</h2>
-    <ul id="orders"></ul>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo-area">
+            <img src="images/logo.png" alt="Canvasify Logo" class="logo-img">
+            <span class="logo-text">Canvasify Admin</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">View Site</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#orders-section">Orders</a></li>
+        </ul>
+    </nav>
+
+    <!-- ADMIN CONTENT -->
+    <main class="container" id="orders-section">
+        <h2 class="section-title">📦 All Orders</h2>
+
+        <div class="checkout-card" style="max-width: 800px;">
+            <ul id="orders" style="list-style: none; text-align: left; padding: 0;">
+                <!-- ডেটা এখানে লোড হবে -->
+                <li style="padding: 10px; border-bottom: 1px solid #ddd; color: #888;">Loading orders...</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-container">
+        <section class="social-section">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/yourpage" target="_blank" class="social-btn facebook">Facebook</a>
+                <a href="https://www.instagram.com/yourpage" target="_blank" class="social-btn instagram">Instagram</a>
+            </div>
+            <p class="copyright">© 2026 Canvasify Admin Panel</p>
+        </section>
+    </footer>
 
     <script>
+        // ব্যাকএন্ড থেকে অর্ডার ফেচ করা
         fetch("http://localhost:5000/orders")
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Network response was not ok");
+                return res.json();
+            })
             .then(data => {
                 const list = document.getElementById("orders");
+                list.innerHTML = ""; // লোডিং টেক্সট মুছে ফেলার জন্য
+
+                if (data.length === 0) {
+                    list.innerHTML = "<li>No orders found.</li>";
+                    return;
+                }
 
                 data.forEach(order => {
                     const li = document.createElement("li");
-                    li.innerText =
-                        "Name: " + order.name +
-                        " | Total: ৳" + order.total;
+                    li.style.padding = "15px";
+                    li.style.borderBottom = "1px solid #eee";
+                    li.style.display = "flex";
+                    li.style.justifyContent = "space-between";
+
+                    li.innerHTML = `
+                        <span><strong>Name:</strong> ${order.name}</span>
+                        <span><strong>Total:</strong> ৳${order.total}</span>
+                    `;
                     list.appendChild(li);
                 });
+            })
+            .catch(err => {
+                console.error("Fetch error:", err);
+                document.getElementById("orders").innerHTML = "<li style='color:red;'>Error loading orders. Make sure your server is running.</li>";
             });
     </script>
 
